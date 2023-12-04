@@ -1,0 +1,29 @@
+
+{% extends 'includes/base.html' %}
+{% block content %}
+    <div style="text-align: center;margin-top:300px;">
+      <table align="center">
+        <form action="/login" method='post'>
+          {% if error %}
+          <label for="error">{{ error }}</label>
+          {% endif %}
+          <tr>
+            <th><label for="username">Логин:</label></th>
+            <td><input type="text" name="username" value="" id="username"></td>
+          </tr>
+          <tr>
+            <th><label for="password">Пароль:</label></th>
+            <td><input type="password" name="password" value="" id="password"></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><a href="/register">Впервые на сайте?</a></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><input type="submit" value="Войти" /></td>
+          </tr>
+        </form>
+      </table>
+    </div>
+{% endblock %}

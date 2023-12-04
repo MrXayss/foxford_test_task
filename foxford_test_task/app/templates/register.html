@@ -1,0 +1,23 @@
+
+{% extends 'includes/base.html' %}
+{% block content %}
+    <div style="text-align: center;margin-top:300px;">
+        <table align="center">
+            <h2>Регистрация</h2>
+            <form action="/register" method='post'>
+                <tr>
+                    <th><label for="username">Логин:</label></th>
+                    <td><input type="text" name="username" value="" id="username" required="required"></td>
+                </tr>
+                <tr>
+                    <th><label for="password">Пароль:</label></th>
+                    <td><input type="password" name="password" value="" id="password" required="required" ></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="submit" value="Зарегистрироваться" /></td>
+                </tr>
+            </form>
+        </table>
+    </div>
+{% endblock %}

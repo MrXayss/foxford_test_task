@@ -1,0 +1,66 @@
+{% extends 'includes/base_affter_auth.html' %}
+{% block content %}
+    <form action="/edit" method="post">
+    <div class="card" style="width: 60rem; margin-left: auto; margin-right: auto; margin-top: 20px;">
+        <div class="card-header">
+            Карточка обращения № {{data.id}}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Имя обратившегося: {{data.applicant_name}}</li>
+          <li class="list-group-item">Текст обращения: {{data.text_ticket}}</li>
+          <li class="list-group-item">Статус:
+            {% if data.status == 'Закрыт' %}
+                {{data.status}}
+            {% else %}
+            <select class="form-select" name="dropdown_edit" style="width: 200px; margin-top: 9px;">
+                {% for status in list_status %}
+                    {% if status == data.status %}
+                        <option value="{{status}}" selected>{{status}}</option>
+                    {% else %}
+                        <option value="{{status}}">{{status}}</option>
+                    {% endif %}
+                {% endfor %}
+              </select>
+            {% endif %}
+          </li>
+          <li class="list-group-item">Назначенный сотрудник:
+            {% if data.status == 'Закрыт' %}
+              {% if data.employee == None %}
+                Не назначен
+              {% else %}
+                  {{data.employee}}
+              {% endif %}
+            {% else %}
+              <select class="form-select" name="dropdown_employee" style="width: 220px; margin-top: 9px;">
+                  {% if data.employee == None %}
+                    <option selected disabled>Выберите сотрудника</option>
+                  {% endif %}
+                  {% for employee in list_employee %}
+                      {% if employee == data.employee %}
+                          <option value="{{employee}}" selected>{{employee}}</option>
+                      {% else %}
+                          <option value="{{employee}}">{{employee}}</option>
+                      {% endif %}
+                  {% endfor %}
+                  <option value="null">Не назначен</option>
+              </select>
+            {% endif %}
+          </li>
+          {% if data.status != 'Закрыт' %}
+          <li class="list-group-item">Ответ пользователю:
+            <input type="text" name="answer" value="" id="answer">
+          </li>
+          {% if data.message_answer != None %}
+            <li class="list-group-item">
+              Ваше сообщение: {{data.message_send}}<br>
+              Ответ от пользователя: {{data.message_answer}}
+            </li>
+          {% endif %}
+          <li class="list-group-item">
+            <button style="height: 36px; width: 8rem;" type="submit" class="btn btn-success" name="id", value="{{data.id}}">Сохранить</button>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </form>
+{% endblock %}

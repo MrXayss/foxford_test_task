@@ -1,0 +1,59 @@
+{% extends 'includes/base_affter_auth.html' %}
+{% block content %}
+    <form action="/dashboard" method="post">
+    <div class="col d-flex justify-content-left" style="margin-top:8px;">
+      <select class="form-select" aria-label="Все" name="dropdown_status" style="width: 200px; margin-top: 9px;">
+        {% for status in list_status %}
+          <option value="{{status}}">{{status}}</option>
+        {% endfor %}
+      </select>
+      <select class="form-select" aria-label="Все" name="dropdown_app" style="width: 200px; margin-top: 9px;">
+        {% for app in list_app %}
+          <option value="{{app}}">{{app}}</option>
+        {% endfor %}
+      </select>
+    <button style="height: 36px; width: 6rem; margin-left:8px; margin-top:10px;" id="button" type="submit" class="btn btn-dark" name="search">Search</button>
+    </div>
+    </form>
+    <table class="table table-hover" data-toggle="table" data-search="true">
+      <thead>
+
+        <tr>
+          <th scope="col">Номер обращения</th>
+          <th scope="col">Имя обратившегося</th>
+          <th scope="col">Текст обращения</th>
+          <th scope="col">Статус</th>
+          <th scope="col">Назначенный сотрудник</th>
+          <th scope="col" data-sortable="true">Время создания</th>
+          <th scope="col" data-sortable="true">Время обновления</th>
+          <th scope="col">Действие</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for obj in tickets %}
+      <tr>
+        <th>{{ obj.id }}</th>
+        <td>{{obj.applicant_name}}</td>
+        <td>{{obj.text_ticket}}</td>
+        <td>{{obj.status}}</td>
+        {% if obj.employee == None %}
+          <td>Неопределен</td>
+        {% else %}
+          <td>{{obj.employee}}</td>
+        {% endif %}
+        <td>{{obj.date_create.strftime("%d.%m.%Y %H:%M:%S")}}</td>
+        {% if obj.date_update == None %}
+          <td>Не обновлялось</td>
+        {% else %}
+          <td>{{obj.date_update.strftime("%d.%m.%Y %H:%M:%S")}}</td>
+        {% endif %}
+        <td>
+          <form action="/edit" method="get ">
+            <button style="height: 36px; width: 6rem;" id="button" type="submit" class="btn btn-light" name="id" value="{{ obj.id }}">Изменить</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
